@@ -6,6 +6,7 @@
 //#include "../terafly/src/control/CViewer.h"
 //#include "../terafly/src/control/CPlugin.h"
 #include "Mozak3DView.h"
+#include "GameControllerAPI/aiGameControllerRaw.h"
 
 class mozak::MozakUI : public teramanager::PMain
 {
@@ -24,6 +25,26 @@ class mozak::MozakUI : public teramanager::PMain
 
 	public:
 		static void onImageTraceHistoryChanged(); //20170803 RZC
+
+        //!Game controller integration code by T. Karlsson
+        unique_ptr<ai::GameControllerRaw>		mGC;
+        void									onPOV(ai::GameControllerPOV* p);		
+        void									onAxis(ai::JoyStickAxis* axis);	
+        void									onButtonDown(ai::GameControllerButton* btn);
+        void									onButtonUp(ai::GameControllerButton* btn);
+
+        void									zoomIn(void);
+        void									zoomOut(void);
+
+    protected:
+        virtual bool							winEvent(MSG * message, long * result);
+        HWND									mWindowsHandle;
+        Mozak3DView*							mMozak3DView;				
+        ai::GameControllerPOVState				mLastPOV;
 };
 
 #endif
+
+#pragma comment(lib, "aiGameControllerAPI")
+#pragma comment(lib, "dslFoundation")
+#pragma comment(lib, "poco_foundation")
