@@ -1,0 +1,15 @@
+
+
+Release 0.5.1 (August 28)
+============================
+* Added a simple logger (logs to users folder: %USERPROFILE%\AppData\Local\Mozak
+* Added version file to be read. Version shows on Mozak's window caption
+* Added support for usage of a SpaceNavigator mouse in Mozak UI
+* Added support for usage of a GameController in Mozak UI
+* Added simple installation script for installing Vaa3D
+* Added word document for documenting the usage and implementation of the gamecontroller and the spacenavigator (docs/GameControllerIntegration.docx)
+* Added this (Mozak) Changelog file
+
+Release 0.5.0 (August 5)
+============================
+* Started work on embedding gamecontroller code in Mozak

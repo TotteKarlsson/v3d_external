@@ -3,15 +3,22 @@
 #include "v3d_application.h"
 // 20170624 RZC: central control include files in Mozak3DView.h
 //#include "../terafly/src/control/CViewer.h"
+#include <Shlobj.h>
 #include <boost/bind.hpp>
 #include  "math.h"
+#include "Poco/Stopwatch.h"
+
 #include "dsl/dslLogging.h"
 #include "dsl/dslLogger.h"
 #include "dsl/dslMathUtils.h"
+#include "dsl/dslFileUtils.h"
+#include "dsl/dslStringUtils.h"
+#include "dsl/dslWin32Utils.h"
 
 using dsl::getHighestLogLevel;
 using dsl::Logger;
 
+using namespace Poco;
 using namespace mozak;
 using namespace ai;
 using dsl::uint;
@@ -36,12 +43,24 @@ MozakUI::MozakUI(V3DPluginCallback2 *callback, QWidget *parent)
 {
 	dsl::gLogger.setLogLevel(dsl::lDebug3);
 	mMozak3DView = NULL;
-    dsl::gLogger.logToFile("p:/va3d.log");
 
-	mWindowsHandle = this->winId();
+    //Setup writing of logfile
+    string tmpFolder = dsl::getKnownFolder(FOLDERID_LocalAppData);
+    tmpFolder = dsl::joinPath(tmpFolder, "vaa3D");
+
+    if (!dsl::folderExists(tmpFolder))
+    {        
+        if (!dsl::createFolder(tmpFolder))
+        {
+            Log(dsl::lError) << "Failed to create folder: " << tmpFolder;
+        }
+    }  
+    
+    dsl::gLogger.logToFile(dsl::joinPath(tmpFolder, "va3d-mozak.log"));
 
 	if (mGC)
 	{
+        mWindowsHandle = this->winId();
 		mGC->capture(mWindowsHandle);
 		mGC->enable();
 		mGC->mPOV.assignEvent(bind(&MozakUI::onPOV, this, _1));
@@ -74,7 +93,29 @@ MozakUI::MozakUI(V3DPluginCallback2 *callback, QWidget *parent)
 	// so that constructor will be called before the following code:
 
 	// Adjust Terafly UI
-	setWindowTitle(QString("Modified Mozak"));
+    //Read version file
+    string vrsFileName("MOZAK_VERSION.txt");
+    stringstream caption;
+    caption << "Mozak UI";
+    try
+    {        
+        string version(dsl::getFileContent(vrsFileName));        
+        
+        if (version.size())
+        {
+            caption << " - version: " << version;
+        }
+        else
+        {
+            caption << "<undefined version>";
+        }
+    }
+    catch (...)
+    {
+        Log(dsl::lError) << "Failed to read file: " << vrsFileName;
+    }
+    setWindowTitle(QString::fromStdString(caption.str()));
+    
 }
 
 void MozakUI::createInstance(V3DPluginCallback2 *callback, QWidget *parent)
@@ -172,66 +213,64 @@ void MozakUI::onSpaceMouseAxis(ai::SpaceNavigatorAxis* axis)
         Log(lInfo) << "Rotation: " << shiftx << ", " << shifty << ", " << shiftz;
     }
 }
+
 void MozakUI::onAxis(JoyStickAxis* axis)
 {		
-	if (axis == &mGC->mJoyStick2.mXAxis || axis == &mGC->mJoyStick2.mYAxis)
-	{
-		Log(lInfo) << "Joystick 2 axes";
-	}
-
 	if (axis == &mGC->mFrontLeftAxis || axis == &mGC->mFrontRightAxis)
 	{
-        int pos(mGC->mFrontLeftAxis.getPosition() - 32768);
-        
+        int pos(mGC->mFrontLeftAxis.getPosition() - 32768);        
         Log(dsl::lDebug) << "Front axes" << pos;
-        static int count(0);    
-        if (count % 10000)
+
+        static Poco::Stopwatch watch;                        
+        //Scale this with the position of the axes
+        int msBetween(50);
+        
+        //elapsed in ms
+        double elapsed = watch.elapsed() / 1000.0;
+        if (elapsed > msBetween || watch.elapsed() == 0)
         {
-            if (pos > 0)
-                this->zoomIn();
-            else
-                this->zoomOut();
-            
-        }
-        count++;
+            (pos > 0) ? this->zoom(true) : this->zoom(false);
+            watch.restart();
+        }                           
 	}
 
-	if (axis == &mGC->mJoyStick2.mXAxis || axis == &mGC->mJoyStick2.mYAxis && mLastPOV)// != povSouth)
+	if (axis == &mGC->mJoyStick2.mXAxis || axis == &mGC->mJoyStick2.mYAxis && mLastPOV)
 	{
 		int x = (mGC->mJoyStick2.mXAxis.getPosition() - 32768) ;
 		int y = (mGC->mJoyStick2.mYAxis.getPosition() - 32768) * -1;
 
 		double magnitude = sqrt(pow(x, 2) + pow(y, 2));
 
-		if ((double) (magnitude/32768) > 0.85)		
+        //Skip if less than 85% of movement
+        if ((double)(magnitude / 32768) < 0.85)
+        {
+            return;
+        }
+
+		double theta = dsl::toDegree( std::atan2(y, x)); 
+		theta = fmod(theta + 270, 360);
+		Log(lInfo) << "(x,y) -> (" << x << "," << y << ")\t" << "Theta: " << theta << "\tMagn" << magnitude << "POV: " << mGC->mPOV.getState();
+						
+        //This functionality is pretty useless
+		if (mLastPOV == povWest )
+		{				
+			mMozak3DView->window3D->xRotBox->setValue(theta);											
+		}
+		else if (mLastPOV == povNorth)
 		{
-			double theta = dsl::toDegree( std::atan2(y, x)); 
-			theta = fmod(theta + 270, 360);
-			Log(lInfo) << "(x,y) -> (" << x << "," << y << ")\t" << "Theta: " << theta << "\tMagn" << magnitude << "POV: " << mGC->mPOV.getState();
+			mMozak3DView->window3D->yRotBox->setValue(theta);
+		}
 
-			//QSpinBox *xRotBox, *yRotBox, *zRotBox, *zoomBox, *xShiftBox, *yShiftBox;
-
-			
-			if (mLastPOV == povWest )
-			{				
-				mMozak3DView->window3D->xRotBox->setValue(theta);											
-			}
-			else if (mLastPOV == povNorth)
-			{
-				mMozak3DView->window3D->yRotBox->setValue(theta);
-			}
-
-			else if (mLastPOV == povEast)
-			{
-				mMozak3DView->window3D->zRotBox->setValue(theta);
-			}
-			else
-			{
-				QPoint p = mMozak3DView->view3DWidget->mapFromGlobal(QCursor::pos());
-				QMouseEvent eve(QEvent::MouseButtonDblClick, p, Qt::RightButton, Qt::NoButton, Qt::NoModifier);
-				mMozak3DView->eventFilter(mMozak3DView->view3DWidget, &eve);
-			}
-		}		
+		else if (mLastPOV == povEast)
+		{
+			mMozak3DView->window3D->zRotBox->setValue(theta);
+		}
+		else
+		{                
+			QPoint p = mMozak3DView->view3DWidget->mapFromGlobal(QCursor::pos());
+			QMouseEvent eve(QEvent::MouseButtonDblClick, p, Qt::RightButton, Qt::NoButton, Qt::NoModifier);
+			mMozak3DView->eventFilter(mMozak3DView->view3DWidget, &eve);
+		}				
 	}
 }
 
@@ -264,52 +303,32 @@ void MozakUI::onButtonDown(ai::GameControllerButton* btn)
 	{
 		QPoint p = mMozak3DView->view3DWidget->mapFromGlobal(QCursor::pos());
 		
-        //send a Mouse double click on left or right button		
+        //send a Mouse double click on left or right button --> zoom Mozak resolution		
 		QMouseEvent eve(QEvent::MouseButtonDblClick, p, (btn == &mGC->mButton6 ? Qt::LeftButton : Qt::RightButton), Qt::NoButton, Qt::NoModifier);
 		mMozak3DView->eventFilter(mMozak3DView->view3DWidget, &eve);		
 	}	
 }
 
-void MozakUI::zoomIn(void)
+void MozakUI::zoom(bool zoomIn)
 {	
-	if (mMozak3DView)
-	{
-		do
-		{
-			Renderer_gl2* curr_renderer = (Renderer_gl2*)(mMozak3DView->view3DWidget->getRenderer());
-			int prevZoom = mMozak3DView->view3DWidget->zoom();
+    if (!mMozak3DView)
+    {
+        return;
+    }
 
-			int zoomStep = -1;//MOUSE_ZOOM(d);
-			Log(dsl::lInfo) << "Zoom Step: " << zoomStep;
-			int newZoom = zoomStep + prevZoom; // wheeling up should zoom IN, not out
+    float zoomStep(1.0);
+	float zoom = (zoomIn ? -1  : + 1 ) * zoomStep;
 
-			// Change zoom
-			mMozak3DView->view3DWidget->setZoom(newZoom);
-			curr_renderer->paint(); // updates the projection matrix			
-			QApplication::processEvents();
-		} while (mGC->mButton8.isDown());
-	}
-}
+	Log(dsl::lInfo) << "Zoom by: " << zoom;
+    float prevZoom = mMozak3DView->view3DWidget->zoom();
+    float newZoom = zoom + prevZoom; 
 
-void MozakUI::zoomOut(void)
-{	
-	Renderer_gl2* curr_renderer = (Renderer_gl2*)(mMozak3DView->view3DWidget->getRenderer());
-	Renderer::SelectMode currentMode = curr_renderer->selectMode;
+	// Change zoom
+	mMozak3DView->view3DWidget->setZoom(newZoom);
 
-	if (mMozak3DView)
-	{
-		do
-		{
-			int prevZoom = mMozak3DView->view3DWidget->zoom();
-			int zoomStep = 1;// MOUSE_ZOOM(d);
-			int newZoom = zoomStep + prevZoom; // wheeling up should zoom IN, not out
-
-			// Change zoom
-			mMozak3DView->view3DWidget->setZoom(newZoom);
-			curr_renderer->paint(); // updates the projection matrix			
-			QApplication::processEvents();
-		} while (mGC->mButton7.isDown());
-	}
+    Renderer_gl2* curr_renderer = (Renderer_gl2*)(mMozak3DView->view3DWidget->getRenderer());
+	curr_renderer->paint(); // updates the projection matrix			
+	QApplication::processEvents();	
 }
 
 MozakUI* MozakUI::getMozakInstance()

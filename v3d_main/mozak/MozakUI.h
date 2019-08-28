@@ -35,8 +35,8 @@ class mozak::MozakUI : public teramanager::PMain
         void									onButtonDown(ai::GameControllerButton* btn);
         void									onButtonUp(ai::GameControllerButton* btn);
 
-        void									zoomIn(void);
-        void									zoomOut(void);
+        void									zoom(bool zoomIn);
+        
         
         //!Spacenavigator integration code by T. Karlsson
         void									onSpaceMouseAxis(ai::SpaceNavigatorAxis* axis);
