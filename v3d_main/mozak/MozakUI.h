@@ -7,7 +7,9 @@
 //#include "../terafly/src/control/CPlugin.h"
 #include "Mozak3DView.h"
 #include "GameControllerAPI/aiGameControllerRaw.h"
+#include "3DXLib\aiSpaceNavigatorDevice.h"
 
+using ai::SpaceNavigatorDevice;
 class mozak::MozakUI : public teramanager::PMain
 {
 	public:
@@ -35,16 +37,21 @@ class mozak::MozakUI : public teramanager::PMain
 
         void									zoomIn(void);
         void									zoomOut(void);
+        
+        //!Spacenavigator integration code by T. Karlsson
+        void									onSpaceMouseAxis(ai::SpaceNavigatorAxis* axis);
 
     protected:
         virtual bool							winEvent(MSG * message, long * result);
         HWND									mWindowsHandle;
-        Mozak3DView*							mMozak3DView;				
+        Mozak3DView*							mMozak3DView;				  
         ai::GameControllerPOVState				mLastPOV;
+        SpaceNavigatorDevice                    mSpaceNavigator;
 };
 
 #endif
 
 #pragma comment(lib, "aiGameControllerAPI")
+#pragma comment(lib, "ai3DXLib")
 #pragma comment(lib, "dslFoundation")
 #pragma comment(lib, "poco_foundation")

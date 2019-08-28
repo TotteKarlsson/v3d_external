@@ -1250,16 +1250,13 @@ void Mozak3DView::loadAnnotations() throw (itm::RuntimeException)
 
     //20170804 RZC: no more cash after fixed the crash of ~CViewer()
     makeTracedNeuronsEditable();          //20170803 RZC  //crash error message: double free or corruption
-
 }
-
 
 void Mozak3DView::clearAnnotations() throw (itm::RuntimeException)
 {
     teramanager::CViewer::clearAnnotations();
     appendHistory();                     //20170803 RZC
 }
-
 
 const char *typeNamesRow1[] = { "??", "soma", "axon", "dendrite", "apical", "fork", "end", "FixIt!", "FixIt!", "FixIt! " };
 const char *typeNamesRow2[] = { " ", " ", " ", " ", "dendrite", "point", "point", "Axon", "dendrite", " ?? " };

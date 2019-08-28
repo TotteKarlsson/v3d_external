@@ -36,7 +36,8 @@ MozakUI::MozakUI(V3DPluginCallback2 *callback, QWidget *parent)
 {
 	dsl::gLogger.setLogLevel(dsl::lDebug3);
 	mMozak3DView = NULL;
-	
+    dsl::gLogger.logToFile("p:/va3d.log");
+
 	mWindowsHandle = this->winId();
 
 	if (mGC)
@@ -53,19 +54,27 @@ MozakUI::MozakUI(V3DPluginCallback2 *callback, QWidget *parent)
 		mGC->mFrontLeftAxis.assignEvent(bind(&MozakUI::onAxis, this, _1));
 		mGC->mFrontRightAxis.assignEvent(bind(&MozakUI::onAxis, this, _1));
 		
-
         mGC->mButton5.assignButtonEvents(bind(&MozakUI::onButtonDown, this, _1), NULL);
 		mGC->mButton6.assignButtonEvents(bind(&MozakUI::onButtonDown, this, _1), NULL);
 		mGC->mButton7.assignButtonEvents(bind(&MozakUI::onButtonDown, this, _1), NULL);
 		mGC->mButton8.assignButtonEvents(bind(&MozakUI::onButtonDown, this, _1), NULL);
-		mGC->mButton9.assignButtonEvents(bind(&MozakUI::onButtonDown, this, _1), NULL);
-
+		mGC->mButton9.assignButtonEvents(bind(&MozakUI::onButtonDown, this, _1), NULL);        
 	}
+
+    //The space navigator
+    mSpaceNavigator.init(mWindowsHandle);
+    mSpaceNavigator.mTx.assignEvent(bind(&MozakUI::onSpaceMouseAxis, this, _1));
+    mSpaceNavigator.mTy.assignEvent(bind(&MozakUI::onSpaceMouseAxis, this, _1));
+    mSpaceNavigator.mTz.assignEvent(bind(&MozakUI::onSpaceMouseAxis, this, _1));
+    mSpaceNavigator.mRx.assignEvent(bind(&MozakUI::onSpaceMouseAxis, this, _1));
+    mSpaceNavigator.mRy.assignEvent(bind(&MozakUI::onSpaceMouseAxis, this, _1));
+    mSpaceNavigator.mRz.assignEvent(bind(&MozakUI::onSpaceMouseAxis, this, _1));
+        
 	// This inherits from the PMain constructor ( teramanager::PMain(callback, parent) )
 	// so that constructor will be called before the following code:
 
 	// Adjust Terafly UI
-	//setWindowTitle(QString("Neuron Game UI"));
+	setWindowTitle(QString("Modified Mozak"));
 }
 
 void MozakUI::createInstance(V3DPluginCallback2 *callback, QWidget *parent)
@@ -105,9 +114,64 @@ bool MozakUI::winEvent(MSG * message, long * result)
 			mGC->processRawInput(message->lParam);
 		}
 	}
+
+    bool res = mSpaceNavigator.handleEvent(*message);
+
 	return false;
 }
 
+void MozakUI::onSpaceMouseAxis(ai::SpaceNavigatorAxis* axis)
+{
+    double translateScaling(10);
+    double translateDelta(0.05);
+    double rotationScaling(100);
+    double rotationdDelta(1);
+
+    //Log(lInfo) << "Space Navigator axes: " << axis->getLabel() << position;
+    if (axis == &mSpaceNavigator.mTx)
+    {
+        double position = mSpaceNavigator.mTx.getPosition() / translateScaling;
+        double xShift = mMozak3DView->getGLWidget()->_xShift;
+        double shift = (position > 0) ? translateDelta : -translateDelta;
+        shift = shift * fabs(position);
+        mMozak3DView->getGLWidget()->setXShift((float) (xShift + shift));
+        Log(lInfo) << "x = " << position;
+    }
+
+    else if (axis == &mSpaceNavigator.mTy)
+    {
+        double position = mSpaceNavigator.mTy.getPosition() / translateScaling;
+        double yShift = mMozak3DView->getGLWidget()->_yShift;
+        double shift = (position > 0) ? translateDelta : -translateDelta;
+        shift = shift * fabs(position);
+        mMozak3DView->getGLWidget()->setYShift((float)(yShift + shift));
+        Log(lInfo) << "y = " << position;
+    }
+    else if (axis == &mSpaceNavigator.mTz)
+    {        
+        double position = mSpaceNavigator.mTz.getPosition() / translateScaling;
+        double shift = (position > 0) ? translateDelta : -translateDelta;
+        
+        shift = shift * fabs(position);
+        float pos = mMozak3DView->window3D->zoomSlider->sliderPosition();
+        mMozak3DView->getGLWidget()->setZoom(pos + (float)(shift));
+        Log(lInfo) << "z = " << position;
+    }
+
+    else if (axis == &mSpaceNavigator.mRx || axis == &mSpaceNavigator.mRy || axis == &mSpaceNavigator.mRz)
+    {        
+        double positionx = mSpaceNavigator.mRx.getPosition() / rotationScaling;
+        double shiftx = fabs(positionx) * ((positionx > 0) ?  rotationdDelta : -rotationdDelta);
+        
+        double positiony = mSpaceNavigator.mRy.getPosition() / rotationScaling;
+        double shifty = fabs(positiony) * ((positiony > 0) ? rotationdDelta : -rotationdDelta);
+        
+        double positionz = mSpaceNavigator.mRz.getPosition() / rotationScaling;
+        double shiftz = fabs(positionz) * ((positionz > 0) ? rotationdDelta : -rotationdDelta);        
+        mMozak3DView->view3DWidget->viewRotation(shiftx*5.0, shifty*5.0, shiftz*5.0);
+        Log(lInfo) << "Rotation: " << shiftx << ", " << shifty << ", " << shiftz;
+    }
+}
 void MozakUI::onAxis(JoyStickAxis* axis)
 {		
 	if (axis == &mGC->mJoyStick2.mXAxis || axis == &mGC->mJoyStick2.mYAxis)

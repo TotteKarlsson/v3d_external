@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Vaa3D"
-#define MyAppVersion "0.5"
+#define MyAppVersion "0.5.1"
 #define MyAppPublisher "Allen Institute"
 #define MyAppURL "http://www.example.com/"
 #define MyAppExeName "vaa3d_msvc.exe"
