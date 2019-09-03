@@ -114,8 +114,8 @@ MozakUI::MozakUI(V3DPluginCallback2 *callback, QWidget *parent)
     {
         Log(dsl::lError) << "Failed to read file: " << vrsFileName;
     }
-    setWindowTitle(QString::fromStdString(caption.str()));
-    
+
+    setWindowTitle(QString::fromStdString(caption.str()));    
 }
 
 void MozakUI::createInstance(V3DPluginCallback2 *callback, QWidget *parent)
@@ -141,8 +141,7 @@ void MozakUI::createInstance(V3DPluginCallback2 *callback, QWidget *parent)
 #ifdef MOZAK_HIDE_VAA3D_CONTROLS
 	uniqueInstance->hide();
 	//V3dApplication::deactivateMainWindow();
-#endif
-	
+#endif	
 }
 
 bool MozakUI::winEvent(MSG * message, long * result)
@@ -163,15 +162,21 @@ bool MozakUI::winEvent(MSG * message, long * result)
 
 void MozakUI::onSpaceMouseAxis(ai::SpaceNavigatorAxis* axis)
 {
+    if (!axis)
+    {
+        return;
+    }
+
     double translateScaling(10);
     double translateDelta(0.05);
     double rotationScaling(100);
     double rotationdDelta(1);
+    double position = axis->getPosition();
 
     //Log(lInfo) << "Space Navigator axes: " << axis->getLabel() << position;
     if (axis == &mSpaceNavigator.mTx)
     {
-        double position = mSpaceNavigator.mTx.getPosition() / translateScaling;
+        position = position / translateScaling;
         double xShift = mMozak3DView->getGLWidget()->_xShift;
         double shift = (position > 0) ? translateDelta : -translateDelta;
         shift = shift * fabs(position);
@@ -181,7 +186,7 @@ void MozakUI::onSpaceMouseAxis(ai::SpaceNavigatorAxis* axis)
 
     else if (axis == &mSpaceNavigator.mTy)
     {
-        double position = mSpaceNavigator.mTy.getPosition() / translateScaling;
+        position = position / translateScaling;
         double yShift = mMozak3DView->getGLWidget()->_yShift;
         double shift = (position > 0) ? translateDelta : -translateDelta;
         shift = shift * fabs(position);
@@ -190,27 +195,27 @@ void MozakUI::onSpaceMouseAxis(ai::SpaceNavigatorAxis* axis)
     }
     else if (axis == &mSpaceNavigator.mTz)
     {        
-        double position = mSpaceNavigator.mTz.getPosition() / translateScaling;
-        double shift = (position > 0) ? translateDelta : -translateDelta;
-        
+        position = position / translateScaling;
+        double shift = (position > 0) ? translateDelta : -translateDelta;        
         shift = shift * fabs(position);
         float pos = mMozak3DView->window3D->zoomSlider->sliderPosition();
         mMozak3DView->getGLWidget()->setZoom(pos + (float)(shift));
         Log(lInfo) << "z = " << position;
     }
 
-    else if (axis == &mSpaceNavigator.mRx || axis == &mSpaceNavigator.mRy || axis == &mSpaceNavigator.mRz)
+    else if (axis == &mSpaceNavigator.mRx || axis == &mSpaceNavigator.mRy || axis == &mSpaceNavigator.mRz) //Rotations
     {        
-        double positionx = mSpaceNavigator.mRx.getPosition() / rotationScaling;
-        double shiftx = fabs(positionx) * ((positionx > 0) ?  rotationdDelta : -rotationdDelta);
+        double positionX = mSpaceNavigator.mRx.getPosition() / rotationScaling;
+        double shiftX = fabs(positionX) * ((positionX > 0) ?  rotationdDelta : -rotationdDelta);
         
-        double positiony = mSpaceNavigator.mRy.getPosition() / rotationScaling;
-        double shifty = fabs(positiony) * ((positiony > 0) ? rotationdDelta : -rotationdDelta);
+        double positionY = mSpaceNavigator.mRy.getPosition() / rotationScaling;
+        double shiftY = fabs(positionY) * ((positionY > 0) ? rotationdDelta : -rotationdDelta);
         
-        double positionz = mSpaceNavigator.mRz.getPosition() / rotationScaling;
-        double shiftz = fabs(positionz) * ((positionz > 0) ? rotationdDelta : -rotationdDelta);        
-        mMozak3DView->view3DWidget->viewRotation(shiftx*5.0, shifty*5.0, shiftz*5.0);
-        Log(lInfo) << "Rotation: " << shiftx << ", " << shifty << ", " << shiftz;
+        double positionZ = mSpaceNavigator.mRz.getPosition() / rotationScaling;
+        double shiftZ = fabs(positionZ) * ((positionZ > 0) ? rotationdDelta : -rotationdDelta);        
+
+        mMozak3DView->view3DWidget->viewRotation(shiftX*5.0, shiftY*5.0, shiftZ*5.0);
+        Log(lInfo) << "Rotation: " << shiftX << ", " << shiftY << ", " << shiftZ;
     }
 }
 
