@@ -1,4 +1,7 @@
 
+Release 0.5.2 (September 3)
+============================
+* Added copying of the MOZAK version file to binary folder
 
 Release 0.5.1 (August 28)
 ============================

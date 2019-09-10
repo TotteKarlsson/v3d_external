@@ -692,11 +692,25 @@ bool Mozak3DView::eventFilter(QObject *object, QEvent *event)
 					moz->traslYposClicked();
 				}
 				break;
+            case Qt::Key_F11:
+                if (key_evt->modifiers() & Qt::ControlModifier)
+                {
+                    MozakUI* moz = MozakUI::getMozakInstance();
+                    moz->openConfigEditor();
+                }
+
+            case Qt::Key_F12:
+                if (key_evt->modifiers() & Qt::ControlModifier)
+                {
+                    MozakUI* moz = MozakUI::getMozakInstance();
+                    moz->loadIniFile();
+                }
             default:
                 changeMode(Renderer::defaultSelectMode, true, true);
 				break;
 		}
 	}
+    
 	else if (event->type() == (QEvent::Type)7)  //2017-6-9 RZC: deal with the #define KeyRelease in X.h of XWindow
 							//QEvent::KeyRelease) // intercept keypress events
 	{

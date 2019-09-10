@@ -8,12 +8,22 @@
 #include "Mozak3DView.h"
 #include "GameControllerAPI/aiGameControllerRaw.h"
 #include "3DXLib\aiSpaceNavigatorDevice.h"
+#include "dsl/dslIniFile.h"
+#include "dsl/dslProperty.h"
+#include "dsl/dslIniFileProperties.h"
+#include "dsl/dslLogLevel.h"
+#include "Poco/Process.h"
 
 using ai::SpaceNavigatorDevice;
+using dsl::IniFile;
+using dsl::Property;
+using dsl::LogLevel;
+
+
 class mozak::MozakUI : public teramanager::PMain
 {
 	public:
-		MozakUI(){}
+        MozakUI();
 		~MozakUI();
 		MozakUI(V3DPluginCallback2 *callback, QWidget *parent);
 		static void createInstance(V3DPluginCallback2 *callback, QWidget *parent);
@@ -28,18 +38,26 @@ class mozak::MozakUI : public teramanager::PMain
 	public:
 		static void onImageTraceHistoryChanged(); //20170803 RZC
 
-        //!Game controller integration code by T. Karlsson
+        //!Game controller and Spacenavigator integration code by T. Karlsson
+        
+        //!The inifile contain parameters for changing some parameters related to the gamecontroller and the SpaceMouse        
+        string                                  mAppDataFolder;
+        dsl::IniFile                            mIniFile;
+        dsl::IniFileProperties                  mGeneralProperties;
+        dsl::Property<LogLevel>     		    mLogLevel;
+        
         unique_ptr<ai::GameControllerRaw>		mGC;
         void									onPOV(ai::GameControllerPOV* p);		
         void									onAxis(ai::JoyStickAxis* axis);	
         void									onButtonDown(ai::GameControllerButton* btn);
         void									onButtonUp(ai::GameControllerButton* btn);
-
-        void									zoom(bool zoomIn);
+        void									zoom(bool zoomIn);       
         
-        
-        //!Spacenavigator integration code by T. Karlsson
+        //!Spacenavigator integration code
         void									onSpaceMouseAxis(ai::SpaceNavigatorAxis* axis);
+        void                                    openConfigEditor();
+        void                                    loadIniFile();
+        int                                     mConfigEditorProcessID;
 
     protected:
         virtual bool							winEvent(MSG * message, long * result);
@@ -50,6 +68,7 @@ class mozak::MozakUI : public teramanager::PMain
 };
 
 #endif
+
 
 #pragma comment(lib, "aiGameControllerAPI")
 #pragma comment(lib, "ai3DXLib")
