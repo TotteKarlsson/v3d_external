@@ -45,7 +45,6 @@ MozakUI::~MozakUI()
     V3dApplication::activateMainWindow();
 }
 
-
 MozakUI::MozakUI(V3DPluginCallback2 *callback, QWidget *parent)
 	:
 	teramanager::PMain(callback, parent),	
@@ -100,8 +99,7 @@ MozakUI::MozakUI(V3DPluginCallback2 *callback, QWidget *parent)
     mSpaceNavigator.mRx.assignEvent(bind(&MozakUI::onSpaceMouseAxis, this, _1));
     mSpaceNavigator.mRy.assignEvent(bind(&MozakUI::onSpaceMouseAxis, this, _1));
     mSpaceNavigator.mRz.assignEvent(bind(&MozakUI::onSpaceMouseAxis, this, _1));
-
-        
+       
 	// This inherits from the PMain constructor ( teramanager::PMain(callback, parent) )
 	// so that constructor will be called before the following code:
 
@@ -155,6 +153,21 @@ void MozakUI::openConfigEditor()
     catch (...)
     {
         Log(lError) << "Problem..";
+    }
+}
+
+void MozakUI::toggleSpaceMouseOnOff()
+{
+    mSpaceNavigator.enable(!mSpaceNavigator.isEnabled());
+    Log(lInfo) << "The spacemouse is: " << (mSpaceNavigator.isEnabled() ? "enabled" : "disabled");
+}
+
+void MozakUI::toggleGameControllerOnOff()
+{
+    if (mGC)
+    {
+        mGC->isEnabled() ? mGC->disable() : mGC->enable();
+        Log(lInfo) << "The gamecontroller is: " << (mGC->isEnabled() ? "enabled" : "disabled");
     }
 }
 

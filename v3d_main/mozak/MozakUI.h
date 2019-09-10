@@ -59,6 +59,9 @@ class mozak::MozakUI : public teramanager::PMain
         void                                    loadIniFile();
         int                                     mConfigEditorProcessID;
 
+        //!When things don't work
+        void                                    toggleSpaceMouseOnOff();
+        void                                    toggleGameControllerOnOff();
     protected:
         virtual bool							winEvent(MSG * message, long * result);
         HWND									mWindowsHandle;
