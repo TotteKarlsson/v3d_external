@@ -1,3 +1,10 @@
+Release 0.5.3 (September 10)
+============================
+* Added shortcuts to turn on/off gamecontroller and/or spacemouse (Ctrl-F9 and Ctrl-F10)
+* Added IniFile capabilities
+* Added ability to open a INIfile editor from within Mozak (Ctrl-F11)
+* Added more properties to the Space navigator
+* Added ability to load a modified ini file at runtime (Ctrl-F12)
 
 Release 0.5.2 (September 3)
 ============================

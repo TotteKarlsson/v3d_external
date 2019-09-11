@@ -73,7 +73,7 @@ class mozak::MozakUI : public teramanager::PMain
 #endif
 
 
-#pragma comment(lib, "aiGameControllerAPI")
-#pragma comment(lib, "ai3DXLib")
-#pragma comment(lib, "dslFoundation")
-#pragma comment(lib, "poco_foundation")
+#pragma comment(lib, "aiGameControllerAPI-vs2013")
+#pragma comment(lib, "ai3DXLib-vs2013")
+#pragma comment(lib, "dslFoundation-vs2013")
+#pragma comment(lib, "poco_foundation-vs2013")

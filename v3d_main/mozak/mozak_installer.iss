@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Vaa3D-Mozak"
-#define MyAppVersion "0.5.2"
+#define MyAppVersion "0.5.3"
 #define MyAppPublisher "Allen Institute"
 #define MyAppURL "http://www.example.com/"
 #define MyAppExeName "vaa3d_msvc.exe"
@@ -33,30 +33,46 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "C:\v3d\v3d_external\v3d_main\v3d\release\vaa3d_msvc.exe";         DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\v3d\v3d_external\v3d_main\v3d\release\*.dll";   DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\v3d\v3d_external\v3d_main\v3d\release\*.dll";   DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "VERSION.txt";                                      DestDir: "{app}"; DestName: "MOZAK_VERSION.txt"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "CHANGELOG.txt";                                    DestDir: "{app}"; DestName: "MOZAK_CHANGELOG.txt"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\pDisk\libs\QT\4.8.6\bin\QtCore4.dll";   DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\pDisk\libs\QT\4.8.6\bin\QtGui4.dll";   DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\pDisk\libs\QT\4.8.6\bin\QtNetwork4.dll";   DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\pDisk\libs\QT\4.8.6\bin\QtOpenGL4.dll";   DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\pDisk\libs\QT\4.8.6\bin\QtSvg4.dll";   DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\pDisk\libs\QT\4.8.6\bin\QtXml4.dll";   DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\pDisk\libs\QT\4.8.6\plugins\imageformats\qgif4.dll";   DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\pDisk\libs\QT\4.8.6\plugins\imageformats\qico4.dll";   DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\pDisk\libs\QT\4.8.6\plugins\imageformats\qjpeg4.dll";   DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\pDisk\libs\QT\4.8.6\plugins\imageformats\qmng4.dll";   DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\pDisk\libs\QT\4.8.6\plugins\imageformats\qsvg4.dll";   DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\pDisk\libs\QT\4.8.6\plugins\imageformats\qtga4.dll";   DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\pDisk\libs\QT\4.8.6\plugins\imageformats\qtiff4.dll";   DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\pDisk\vsbuild\bin\aiGameControllerAPI.dll";   DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\pDisk\vsbuild\bin\dslFoundation.dll";   DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\pDisk\vsbuild\bin\poco_foundation.dll";   DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\pDisk\vsbuild\bin\tinyxml2.dll";   DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\pDisk\vsbuild\bin\ai3DXLib.dll";   DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\v3d\v3d_external\v3d_main\v3d\release\vaa3d_msvc.exe";    DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\v3d\v3d_external\v3d_main\v3d\release\*.dll";             DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\v3d\v3d_external\v3d_main\v3d\release\*.dll";             DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "VERSION.txt";                                                DestDir: "{app}"; DestName: "MOZAK_VERSION.txt"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "CHANGELOG.txt";                                              DestDir: "{app}"; DestName: "MOZAK_CHANGELOG.txt"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\pDisk\libs\QT\4.8.6\bin\QtCore4.dll";                     DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\pDisk\libs\QT\4.8.6\bin\QtGui4.dll";                      DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\pDisk\libs\QT\4.8.6\bin\QtNetwork4.dll";                  DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\pDisk\libs\QT\4.8.6\bin\QtOpenGL4.dll";                   DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\pDisk\libs\QT\4.8.6\bin\QtSvg4.dll";                      DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\pDisk\libs\QT\4.8.6\bin\QtXml4.dll";                      DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\pDisk\libs\QT\4.8.6\plugins\imageformats\qgif4.dll";      DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\pDisk\libs\QT\4.8.6\plugins\imageformats\qico4.dll";      DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\pDisk\libs\QT\4.8.6\plugins\imageformats\qjpeg4.dll";     DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\pDisk\libs\QT\4.8.6\plugins\imageformats\qmng4.dll";      DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\pDisk\libs\QT\4.8.6\plugins\imageformats\qsvg4.dll";      DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\pDisk\libs\QT\4.8.6\plugins\imageformats\qtga4.dll";      DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\pDisk\libs\QT\4.8.6\plugins\imageformats\qtiff4.dll";     DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\pDisk\vsbuild\bin\aiGameControllerAPI-vs2013.dll";        DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\pDisk\vsbuild\bin\dslFoundation-vs2013.dll";              DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\pDisk\vsbuild\bin\poco_foundation-vs2013.dll";            DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\pDisk\vsbuild\bin\tinyxml2-vs2013.dll";                   DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\pDisk\vsbuild\bin\ai3DXLib-vs2013.dll";                   DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 
+; The configFile UI
+Source: "C:\pDisk\build\bin\configFileUI.exe";                        DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\pDisk\build\bin\dslFoundation.dll";              DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\pDisk\build\bin\dslVCLCommon.dll";              DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\pDisk\build\BPL\dslVCLComponents.bpl";              DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\pDisk\build\BPL\dslVCLVisualComponents.bpl";              DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\pDisk\build\bin\poco_foundation.dll";            DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\pDisk\build\bin\tinyxml2.dll";                   DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\pDisk\build\bin\sqlite.dll";              DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\CodeGear\Tokyo\bin\Borlndmm.dll";              DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\CodeGear\Tokyo\bin\CC3250MT.dll";              DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\CodeGear\Tokyo\bin\rtl250.bpl";              DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\CodeGear\Tokyo\bin\vcl250.bpl";              DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\CodeGear\Tokyo\bin\vclactnband250.bpl";              DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\CodeGear\Tokyo\bin\vclimg250.bpl";              DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\CodeGear\Tokyo\bin\vclx250.bpl";              DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 [Icons]
