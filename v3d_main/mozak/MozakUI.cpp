@@ -22,6 +22,8 @@ using namespace dsl;
 MozakUI::MozakUI()
     :
     mLogLevel(lInfo),    
+    mGameControllerZoomFactor(1),
+    mZoomSpeed(10),
     mConfigEditorProcessID(NULL)
 {}
 
@@ -51,6 +53,8 @@ MozakUI::MozakUI(V3DPluginCallback2 *callback, QWidget *parent)
 	mLastPOV(ai::povNotEngaged),
 	mGC(unique_ptr<ai::GameControllerRaw>(new GameControllerRaw())),
     mLogLevel(lInfo),
+    mGameControllerZoomFactor(1),
+    mZoomSpeed(1),
     mAppDataFolder(joinPath(getKnownFolder(FOLDERID_LocalAppData), "Vaa3D-Mozak"))
 {   
     gLogger.setLogLevel(dsl::lDebug5);
@@ -64,6 +68,8 @@ MozakUI::MozakUI(V3DPluginCallback2 *callback, QWidget *parent)
     mGeneralProperties.setSectionName("GENERAL");
     mGeneralProperties.setIniFile(&mIniFile);
     mGeneralProperties.add((dsl::BaseProperty*)&mLogLevel.setup("LOG_LEVEL", dsl::lAny));
+    mGeneralProperties.add((dsl::BaseProperty*)&mGameControllerZoomFactor.setup("GAME_CONTROLLER_ZOOM_FACTOR", 2.0));
+    mGeneralProperties.add((dsl::BaseProperty*)&mZoomSpeed.setup("ZOOM_SPEED", 1.0));
     
     dsl::gLogger.logToFile(dsl::joinPath(mAppDataFolder, "va3d-mozak.log"));
 
@@ -246,6 +252,7 @@ void MozakUI::onSpaceMouseAxis(ai::SpaceNavigatorAxis* axis)
     {                
         float pos = mMozak3DView->window3D->zoomSlider->sliderPosition();
         mMozak3DView->getGLWidget()->setZoom(pos + (float)(position));
+        Log(lDebug3) << "Scaled zoom position: " << position;
     }
 
     //Rotations
@@ -265,28 +272,26 @@ void MozakUI::onAxis(JoyStickAxis* axis)
         return;
     }
 
-	if (axis == &mGC->mFrontLeftAxis || axis == &mGC->mFrontRightAxis)
-	{
-        int pos(mGC->mFrontLeftAxis.getPosition() -32768);
-
-        if (pos == 0)
+	//if (axis == &mGC->mFrontLeftAxis || axis == &mGC->mFrontRightAxis)
+	{       
+        static Stopwatch watch;        
+        double elapsed = watch.elapsed() / 1000;
+        if (elapsed < mZoomSpeed && watch.elapsed() != 0)
         {
             return;
-        }
+        }      
 
-        Log(dsl::lDebug) << "Front axes" << pos;
-        static Poco::Stopwatch watch;                        
+        static double lastPos(0);
+        double pos((mGC->mFrontLeftAxis.getPosition() / 65408.0) - 0.5);
+        pos = pos * mGameControllerZoomFactor;
 
         //Scale this with the position of the axes
-        int msBetween(50);
-        
-        //elapsed in ms
-        double elapsed = watch.elapsed() / 1000.0;
-        if (elapsed > msBetween || watch.elapsed() == 0)
-        {
-            (pos > 0) ? this->zoom(true) : this->zoom(false);
-            watch.restart();
-        }                           
+       int sliderPosition = mMozak3DView->window3D->zoomSlider->sliderPosition();
+       float newPosition = sliderPosition + pos;
+       Log(lDebug3) << "Scaled zoom position: " << pos;      
+       
+       mMozak3DView->getGLWidget()->setZoom(newPosition);       
+       watch.restart();
 	}
 
 	if (axis == &mGC->mJoyStick2.mXAxis || axis == &mGC->mJoyStick2.mYAxis && mLastPOV)

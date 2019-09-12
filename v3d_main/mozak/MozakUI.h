@@ -45,6 +45,8 @@ class mozak::MozakUI : public teramanager::PMain
         dsl::IniFile                            mIniFile;
         dsl::IniFileProperties                  mGeneralProperties;
         dsl::Property<LogLevel>     		    mLogLevel;
+        dsl::Property<double>     	     	    mGameControllerZoomFactor;
+        dsl::Property<double>     	     	    mZoomSpeed;
         
         unique_ptr<ai::GameControllerRaw>		mGC;
         void									onPOV(ai::GameControllerPOV* p);		
