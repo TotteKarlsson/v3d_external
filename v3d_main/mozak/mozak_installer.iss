@@ -35,9 +35,9 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 [Files]
 Source: "C:\v3d\v3d_external\v3d_main\v3d\release\vaa3d_msvc.exe";    DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\v3d\v3d_external\v3d_main\v3d\release\*.dll";             DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\v3d\v3d_external\v3d_main\v3d\release\*.dll";             DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "VERSION.txt";                                                DestDir: "{app}"; DestName: "MOZAK_VERSION.txt"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "CHANGELOG.txt";                                              DestDir: "{app}"; DestName: "MOZAK_CHANGELOG.txt"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "MOZAK-CONTROLLERS-HELP.txt";                                 DestDir: "{app}"; DestName: "MOZAK-CONTROLLERS-HELP.txt"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "C:\pDisk\libs\QT\4.8.6\bin\QtCore4.dll";                     DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "C:\pDisk\libs\QT\4.8.6\bin\QtGui4.dll";                      DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "C:\pDisk\libs\QT\4.8.6\bin\QtNetwork4.dll";                  DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs

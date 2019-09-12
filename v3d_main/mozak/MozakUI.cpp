@@ -52,9 +52,8 @@ MozakUI::MozakUI(V3DPluginCallback2 *callback, QWidget *parent)
 	mGC(unique_ptr<ai::GameControllerRaw>(new GameControllerRaw())),
     mLogLevel(lInfo),
     mAppDataFolder(joinPath(getKnownFolder(FOLDERID_LocalAppData), "Vaa3D-Mozak"))
-{
-   
-	gLogger.setLogLevel(dsl::lDebug3);
+{   
+    gLogger.setLogLevel(dsl::lDebug5);
 	mMozak3DView = NULL;
 
     if (!dsl::folderExists(mAppDataFolder) && !dsl::createFolder(mAppDataFolder))
@@ -174,6 +173,8 @@ void MozakUI::loadIniFile()
     mIniFile.load(joinPath(mAppDataFolder, "vaa3d-mozak.ini"));
     mGeneralProperties.read();
     mSpaceNavigator.readProperties(mIniFile);
+    dsl::gLogger.setLogLevel(mLogLevel);
+
 }
 
 void MozakUI::createInstance(V3DPluginCallback2 *callback, QWidget *parent)
