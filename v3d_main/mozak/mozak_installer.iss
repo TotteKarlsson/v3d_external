@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Vaa3D-Mozak"
-#define MyAppVersion "0.5.3"
+#define MyAppVersion "0.5.4"
 #define MyAppPublisher "Allen Institute"
 #define MyAppURL "http://www.example.com/"
 #define MyAppExeName "vaa3d_msvc.exe"
@@ -66,8 +66,8 @@ Source: "C:\pDisk\build\BPL\dslVCLVisualComponents.bpl";              DestDir: "
 Source: "C:\pDisk\build\bin\poco_foundation.dll";            DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "C:\pDisk\build\bin\tinyxml2.dll";                   DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "C:\pDisk\build\bin\sqlite.dll";              DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\CodeGear\Tokyo\bin\Borlndmm.dll";              DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\CodeGear\Tokyo\bin\CC3250MT.dll";              DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\CodeGear\Tokyo\bin\borlndmm.dll";              DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\CodeGear\Tokyo\bin\cc32250mt.dll";              DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "C:\CodeGear\Tokyo\bin\rtl250.bpl";              DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "C:\CodeGear\Tokyo\bin\vcl250.bpl";              DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "C:\CodeGear\Tokyo\bin\vclactnband250.bpl";              DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs

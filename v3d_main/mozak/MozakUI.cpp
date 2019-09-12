@@ -71,8 +71,7 @@ MozakUI::MozakUI(V3DPluginCallback2 *callback, QWidget *parent)
 	if (mGC)
 	{
         mWindowsHandle = this->winId();
-		mGC->capture(mWindowsHandle);
-		mGC->enable();
+		mGC->capture(mWindowsHandle);		
 		mGC->mPOV.assignEvent(bind(&MozakUI::onPOV, this, _1));
 		mGC->mJoyStick1.mXAxis.assignEvent(bind(&MozakUI::onAxis, this, _1 ));
 		mGC->mJoyStick1.mYAxis.assignEvent(bind(&MozakUI::onAxis, this, _1 ));
@@ -92,7 +91,6 @@ MozakUI::MozakUI(V3DPluginCallback2 *callback, QWidget *parent)
 
     //The space navigator
     mSpaceNavigator.init(mWindowsHandle);
-
     mSpaceNavigator.mTx.assignEvent(bind(&MozakUI::onSpaceMouseAxis, this, _1));
     mSpaceNavigator.mTy.assignEvent(bind(&MozakUI::onSpaceMouseAxis, this, _1));
     mSpaceNavigator.mTz.assignEvent(bind(&MozakUI::onSpaceMouseAxis, this, _1));

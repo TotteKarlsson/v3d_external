@@ -1,3 +1,8 @@
+Release 0.5.4 (September 12)
+============================
+* Changed popping up dialog box into a qDebug message, occurring when changing color, by pressing 'v' in Mozak
+* Mozak starts with gamecontroller disabled by default
+
 Release 0.5.3 (September 10)
 ============================
 * Added shortcuts to turn on/off gamecontroller and/or spacemouse (Ctrl-F9 and Ctrl-F10)
