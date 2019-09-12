@@ -272,7 +272,7 @@ void MozakUI::onAxis(JoyStickAxis* axis)
         return;
     }
 
-	//if (axis == &mGC->mFrontLeftAxis || axis == &mGC->mFrontRightAxis)
+	if (axis == &mGC->mFrontLeftAxis || axis == &mGC->mFrontRightAxis)
 	{       
         static Stopwatch watch;        
         double elapsed = watch.elapsed() / 1000;
@@ -280,18 +280,18 @@ void MozakUI::onAxis(JoyStickAxis* axis)
         {
             return;
         }      
-
-        static double lastPos(0);
-        double pos((mGC->mFrontLeftAxis.getPosition() / 65408.0) - 0.5);
+        
+        double pos((mGC->mFrontLeftAxis.getPosition() / 65408.0) - 0.5); //Give it a range of -0.5 to + 0.5
         pos = pos * mGameControllerZoomFactor;
-
-        //Scale this with the position of the axes
-       int sliderPosition = mMozak3DView->window3D->zoomSlider->sliderPosition();
-       float newPosition = sliderPosition + pos;
-       Log(lDebug3) << "Scaled zoom position: " << pos;      
+        
+        int sliderPosition = mMozak3DView->window3D->zoomSlider->sliderPosition();
+        float newPosition = sliderPosition + pos;
+        Log(lDebug3) << "Scaled zoom position: " << pos <<"\t Slider position: " << sliderPosition;
        
-       mMozak3DView->getGLWidget()->setZoom(newPosition);       
-       watch.restart();
+        mMozak3DView->getGLWidget()->setZoom(newPosition);
+
+        //Control the speed.. could be more finegrained. faster with small steps?
+        watch.restart();
 	}
 
 	if (axis == &mGC->mJoyStick2.mXAxis || axis == &mGC->mJoyStick2.mYAxis && mLastPOV)
