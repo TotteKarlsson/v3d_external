@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- DS4Windows Configuration Data. 9/3/2019 4:55:43 PM -->
+
+<DS4Windows>
+  <flushHIDQueue>True</flushHIDQueue>
+  <touchToggle>False</touchToggle>
+  <idleDisconnectTimeout>1200</idleDisconnectTimeout>
+  <Color>0,60,0</Color>
+  <RumbleBoost>100</RumbleBoost>
+  <ledAsBatteryIndicator>True</ledAsBatteryIndicator>
+  <FlashType>0</FlashType>
+  <flashBatteryAt>10</flashBatteryAt>
+  <touchSensitivity>49</touchSensitivity>
+  <LowColor>255,0,99</LowColor>
+  <ChargingColor>255,255,255</ChargingColor>
+  <FlashColor>255,128,0</FlashColor>
+  <touchpadJitterCompensation>True</touchpadJitterCompensation>
+  <lowerRCOn>False</lowerRCOn>
+  <tapSensitivity>100</tapSensitivity>
+  <doubleTap>True</doubleTap>
+  <scrollSensitivity>0</scrollSensitivity>
+  <LeftTriggerMiddle>0</LeftTriggerMiddle>
+  <RightTriggerMiddle>0</RightTriggerMiddle>
+  <TouchpadInvert>0</TouchpadInvert>
+  <L2AntiDeadZone>0</L2AntiDeadZone>
+  <R2AntiDeadZone>0</R2AntiDeadZone>
+  <L2MaxZone>100</L2MaxZone>
+  <R2MaxZone>100</R2MaxZone>
+  <ButtonMouseSensitivity>25</ButtonMouseSensitivity>
+  <Rainbow>0</Rainbow>
+  <LSDeadZone>13</LSDeadZone>
+  <RSDeadZone>13</RSDeadZone>
+  <LSAntiDeadZone>0</LSAntiDeadZone>
+  <RSAntiDeadZone>0</RSAntiDeadZone>
+  <LSMaxZone>100</LSMaxZone>
+  <RSMaxZone>100</RSMaxZone>
+  <LSRotation>0</LSRotation>
+  <RSRotation>0</RSRotation>
+  <SXDeadZone>0.25</SXDeadZone>
+  <SZDeadZone>0.25</SZDeadZone>
+  <SXMaxZone>100</SXMaxZone>
+  <SZMaxZone>100</SZMaxZone>
+  <SXAntiDeadZone>0</SXAntiDeadZone>
+  <SZAntiDeadZone>0</SZAntiDeadZone>
+  <Sensitivity>1|1|1|1|1|1</Sensitivity>
+  <ChargingType>2</ChargingType>
+  <MouseAcceleration>False</MouseAcceleration>
+  <LaunchProgram>
+  </LaunchProgram>
+  <DinputOnly>False</DinputOnly>
+  <StartTouchpadOff>False</StartTouchpadOff>
+  <UseTPforControls>False</UseTPforControls>
+  <UseSAforMouse>True</UseSAforMouse>
+  <SATriggers>3</SATriggers>
+  <SATriggerCond>and</SATriggerCond>
+  <SASteeringWheelEmulationAxis>None</SASteeringWheelEmulationAxis>
+  <SASteeringWheelEmulationRange>90</SASteeringWheelEmulationRange>
+  <TouchDisInvTriggers>-1</TouchDisInvTriggers>
+  <GyroSensitivity>50</GyroSensitivity>
+  <GyroSensVerticalScale>50</GyroSensVerticalScale>
+  <GyroInvert>0</GyroInvert>
+  <GyroTriggerTurns>True</GyroTriggerTurns>
+  <GyroSmoothingWeight>80</GyroSmoothingWeight>
+  <GyroSmoothing>True</GyroSmoothing>
+  <GyroMouseHAxis>0</GyroMouseHAxis>
+  <GyroMouseDeadZone>10</GyroMouseDeadZone>
+  <GyroMouseToggle>False</GyroMouseToggle>
+  <LSCurve>0</LSCurve>
+  <RSCurve>0</RSCurve>
+  <ProfileActions>Disconnect Controller</ProfileActions>
+  <BTPollRate>4</BTPollRate>
+  <LSOutputCurveMode>linear</LSOutputCurveMode>
+  <LSOutputCurveCustom>
+  </LSOutputCurveCustom>
+  <RSOutputCurveMode>linear</RSOutputCurveMode>
+  <RSOutputCurveCustom>
+  </RSOutputCurveCustom>
+  <LSSquareStick>False</LSSquareStick>
+  <RSSquareStick>False</RSSquareStick>
+  <SquareStickRoundness>5</SquareStickRoundness>
+  <L2OutputCurveMode>linear</L2OutputCurveMode>
+  <L2OutputCurveCustom>
+  </L2OutputCurveCustom>
+  <R2OutputCurveMode>linear</R2OutputCurveMode>
+  <R2OutputCurveCustom>
+  </R2OutputCurveCustom>
+  <SXOutputCurveMode>linear</SXOutputCurveMode>
+  <SXOutputCurveCustom>
+  </SXOutputCurveCustom>
+  <SZOutputCurveMode>linear</SZOutputCurveMode>
+  <SZOutputCurveCustom>
+  </SZOutputCurveCustom>
+  <TrackballMode>False</TrackballMode>
+  <TrackballFriction>50</TrackballFriction>
+  <OutputContDevice>X360</OutputContDevice>
+  <Control>
+    <Button>
+      <R3>Mouse Up</R3>
+      <TouchLeft>Left Mouse Button</TouchLeft>
+      <GyroZPos>Mouse Wheel Down</GyroZPos>
+      <GyroZNeg>Mouse Wheel Up</GyroZNeg>
+    </Button>
+    <Key>
+      <L3>27</L3>
+      <Circle>90</Circle>
+    </Key>
+    <Extras>
+      <RXPos>0,0,0,0,0,0,0,1,25</RXPos>
+      <L2>0,0,1,255,255,255,0,0,0</L2>
+    </Extras>
+  </Control>
+  <ShiftControl>
+    <Key>
+      <Circle Trigger="2">90</Circle>
+    </Key>
+  </ShiftControl>
+</DS4Windows>
