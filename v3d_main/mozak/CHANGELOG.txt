@@ -1,7 +1,11 @@
+Release 0.5.5 (September 17)
+============================
+* Changed game controller zoom behavior
+
 Release 0.5.4 (September 12)
 ============================
 * Changed popping up dialog box into a qDebug message, occurring when changing color, by pressing 'v' in Mozak
-* Mozak starts with gamecontroller disabled by default
+* Mozak starts with game controller disabled by default
 
 Release 0.5.3 (September 10)
 ============================
