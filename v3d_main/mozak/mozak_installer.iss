@@ -1,3 +1,4 @@
+; Match app version with VERSION.txt file in mozak folder
 
 #define MyAppName           "Vaa3D-Mozak"
 #define MyAppVersion        "0.5.6"
@@ -32,9 +33,26 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 Source: "C:\v3d\v3d_external\v3d_main\v3d\release\vaa3d_msvc.exe";    DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\v3d\v3d_external\v3d_main\v3d\release\*.dll";             DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\v3d\v3d_external\v3d_main\v3d\release\*.dll";             DestDir: "{app}"; Flags: ignoreversion 
+
+
+;Most used plugins
+Source: "C:\v3d\v3d_external\bin\plugins\IVSCC\*.dll";                                      DestDir: "{app}/plugins";                                       Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\v3d\v3d_external\bin\plugins\IVSCC_smoothing_swc\*.dll";                        DestDir: "{app}/plugins/IVSCC_smoothing_swc";                   Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\v3d\v3d_external\bin\plugins\linker_file\*.dll";                                DestDir: "{app}/plugins/linker_file";                           Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\v3d\v3d_external\bin\plugins\AllenNeuron_postprocessing\*.dll";                 DestDir: "{app}/plugins/AllenNeuron_postprocessing";            Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\v3d\v3d_external\bin\plugins\neuron_utilities\assemble_neuron_live\*.dll";      DestDir: "{app}/plugins/neuron_utilities/assemble_neuron_live"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\v3d\v3d_external\bin\plugins\neuron_utilities\inter_node_pruning\*.dll";        DestDir: "{app}/plugins/neuron_utilities/inter_node_pruning";   Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\v3d\v3d_external\bin\plugins\neuron_utilities\pruning_swc_simple\*.dll";        DestDir: "{app}/plugins/neuron_utilities/pruning_swc_simple";   Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\v3d\v3d_external\bin\plugins\neuron_utilities\resample_swc\*.dll";              DestDir: "{app}/plugins/neuron_utilities/resample_swc";         Flags: ignoreversion recursesubdirs createallsubdirs                                                                             
+Source: "C:\v3d\v3d_external\bin\plugins\neuron_utilities\typeset_childbranch\*.dll";       DestDir: "{app}/plugins/neuron_utilities/typeset_childbranch";  Flags: ignoreversion recursesubdirs createallsubdirs                                                                             
+
+; ALL plugins
+Source: "C:\v3d\v3d_external\bin\plugins\*.dll";                                             DestDir: "{app}/plugins/ALL"; Flags: ignoreversion recursesubdirs createallsubdirs
+
 Source: "VERSION.txt";                                                DestDir: "{app}"; DestName: "MOZAK_VERSION.txt"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "CHANGELOG.txt";                                              DestDir: "{app}"; DestName: "MOZAK_CHANGELOG.txt"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "GracesMozakConfiguration.xml";                               DestDir: "{app}"; DestName: "GracesMozakConfiguration.xml"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "DS4_profile.xml";                                            DestDir: "{app}"; DestName: "DS4_profile.xml"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "MOZAK-CONTROLLERS-HELP.txt";                                 DestDir: "{app}"; DestName: "MOZAK-CONTROLLERS-HELP.txt"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "C:\pDisk\libs\QT\4.8.6\bin\QtCore4.dll";                     DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
