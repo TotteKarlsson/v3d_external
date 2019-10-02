@@ -1,7 +1,7 @@
 ; Match app version with VERSION.txt file in mozak folder
 
 #define MyAppName           "Vaa3D-Mozak"
-#define MyAppVersion        "0.5.6"
+#define MyAppVersion        "0.5.7"
 #define MyAppPublisher      "Allen Institute"
 #define MyAppURL            "http://www.example.com/"
 #define MyAppExeName        "vaa3d_msvc.exe"
