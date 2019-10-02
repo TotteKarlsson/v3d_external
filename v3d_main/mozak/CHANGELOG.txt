@@ -1,3 +1,7 @@
+Release 0.5.7 (Oct 2)
+============================
+* reorganized installed plugins
+
 Release 0.5.6 (September 26)
 ============================
 * Updated installer script to bring in plugins
