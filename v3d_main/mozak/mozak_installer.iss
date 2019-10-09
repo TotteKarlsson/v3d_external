@@ -32,8 +32,8 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "C:\v3d\v3d_external\v3d_main\v3d\release\vaa3d_msvc.exe";    DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\v3d\v3d_external\v3d_main\v3d\release\*.dll";             DestDir: "{app}"; Flags: ignoreversion 
+Source: "C:\v3d\v3d_external\bin\vaa3d_msvc.exe";                                           DestDir: "{app}";                                           Flags: ignoreversion
+Source: "C:\v3d\v3d_external\v3d_main\v3d\release\*.dll";                                   DestDir: "{app}";                                           Flags: ignoreversion 
 
 
 ;Most used plugins

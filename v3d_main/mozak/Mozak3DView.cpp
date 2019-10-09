@@ -692,27 +692,21 @@ bool Mozak3DView::eventFilter(QObject *object, QEvent *event)
 					moz->traslYposClicked();
 				}
 				break;
+
             case Qt::Key_F9:
                 if (key_evt->modifiers() & Qt::ControlModifier)
                 {
                     MozakUI* moz = MozakUI::getMozakInstance();
                     moz->toggleGameControllerOnOff();
                 }
-            break;
+                break;
             case Qt::Key_F10:
                 if (key_evt->modifiers() & Qt::ControlModifier)
                 {
                     MozakUI* moz = MozakUI::getMozakInstance();
                     moz->toggleSpaceMouseOnOff();
                 }
-            break;
-            case Qt::Key_F11:
-                if (key_evt->modifiers() & Qt::ControlModifier)
-                {
-                    MozakUI* moz = MozakUI::getMozakInstance();
-                    moz->openConfigEditor();
-                }
-            break;
+                break;
             case Qt::Key_F12:
                 if (key_evt->modifiers() & Qt::ControlModifier)
                 {
@@ -720,6 +714,14 @@ bool Mozak3DView::eventFilter(QObject *object, QEvent *event)
                     moz->loadIniFile();
                 }
                 break;
+            case Qt::Key_F11:
+                if (key_evt->modifiers() & Qt::ControlModifier)
+                {
+                    MozakUI* moz = MozakUI::getMozakInstance();
+                    moz->openConfigEditor();
+                }
+                break;
+               
             default:
                 changeMode(Renderer::defaultSelectMode, true, true);
 				break;

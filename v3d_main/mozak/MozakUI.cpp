@@ -68,8 +68,8 @@ MozakUI::MozakUI(V3DPluginCallback2 *callback, QWidget *parent)
     mGeneralProperties.setSectionName("GENERAL");
     mGeneralProperties.setIniFile(&mIniFile);
     mGeneralProperties.add((dsl::BaseProperty*)&mLogLevel.setup("LOG_LEVEL", dsl::lAny));
-    mGeneralProperties.add((dsl::BaseProperty*)&mGameControllerZoomFactor.setup("GAME_CONTROLLER_ZOOM_FACTOR", 2.0));
-    mGeneralProperties.add((dsl::BaseProperty*)&mZoomSpeed.setup("ZOOM_SPEED", 1.0));
+    mGeneralProperties.add((dsl::BaseProperty*)&mGameControllerZoomFactor.setup("GAME_CONTROLLER_ZOOM_FACTOR", 10.0));
+    mGeneralProperties.add((dsl::BaseProperty*)&mZoomSpeed.setup("ZOOM_SPEED", 10.0));
     
     dsl::gLogger.logToFile(dsl::joinPath(mAppDataFolder, "va3d-mozak.log"));
 
@@ -274,19 +274,27 @@ void MozakUI::onAxis(JoyStickAxis* axis)
 
 	if (axis == &mGC->mFrontLeftAxis || axis == &mGC->mFrontRightAxis)
 	{       
+        static float delta = 0;
+
+        double pos = (mGC->mFrontLeftAxis.getPosition() / 65408.0) - 0.5; 
+
         static Stopwatch watch;        
         double elapsed = watch.elapsed() / 1000;
+        
         if (elapsed < mZoomSpeed && watch.elapsed() != 0)
         {
             return;
         }      
         
-        double pos((mGC->mFrontLeftAxis.getPosition() / 65408.0) - 0.5); //Give it a range of -0.5 to + 0.5
-        pos = pos * mGameControllerZoomFactor;
         
         int sliderPosition = mMozak3DView->window3D->zoomSlider->sliderPosition();
-        float newPosition = sliderPosition + pos;
-        Log(lDebug3) << "Scaled zoom position: " << pos <<"\t Slider position: " << sliderPosition;
+
+        delta = (pos > 0) ? 1 : -1;
+
+        
+        
+        float newPosition = sliderPosition + round(delta) ;
+        //Log(lDebug3) << "Scaled zoom position: " << pos <<"\t Slider position: " << sliderPosition;
        
         mMozak3DView->getGLWidget()->setZoom(newPosition);
 
